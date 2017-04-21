@@ -4,6 +4,17 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var MongoClient = require('mongodb');
+var assert = require('assert');
+
+//connection url
+var db_url = 'mongodb://localhost:27017/rentalStage';
+
+//connecting to database
+MongoClient.connect(db_url, function(err,db){
+	assert.equal(err,null);
+	console.log("Connected to db successfully!");
+});
 
 var index = require('./routes/index');
 var users = require('./routes/users');
