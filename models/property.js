@@ -19,6 +19,7 @@ var property_schema = new Schema({
     rating: {
         type: Number,
         required: true,
+        default:5
     },
     comments: {
         type: [String],
@@ -27,3 +28,8 @@ var property_schema = new Schema({
 	timestamps: true
 });
 
+//creating model 
+var Properties = mongoose.model('Property',property_schema);
+
+// make the model available to the application.
+module.exports = Properties;

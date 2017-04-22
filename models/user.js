@@ -16,7 +16,11 @@ var user_schema = new Schema({
         type: String,
         required: true,
     },
-    email: {
+    username: {//propmt for email,named as username since middleware use this
+        type: String,
+        required: true,
+    },
+    password: {
         type: String,
         required: true,
     },
@@ -27,6 +31,10 @@ var user_schema = new Schema({
     address: {
         type: String,
         required: true
+    },
+    admin:{
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true
@@ -36,5 +44,5 @@ var user_schema = new Schema({
 // adding schema to model
 var Users = mongoose.model('User', user_schema);
 
-// make themodel available to the application.
+// make the model available to the application.
 module.exports = Users;

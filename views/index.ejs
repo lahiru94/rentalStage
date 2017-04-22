@@ -3,18 +3,23 @@
 	  <head>
 	    <title><%= title %></title>
 	    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+	    <link rel='stylesheet' href='/stylesheets/index-custom.css' />
 	  </head>
 	  <body>
 		  <% include ./partials/navbar %>
 
+
+		<div class="bg"></div>
+		<div class="jumbotron-1">
+		  <h1>Welcome to rental stage</h1>
+		  <p class="lead">property rental management</p>
+		</div>
+		<br>
+		<br>
 		<div class="container" style="padding-top: 50px">
 	    <div class="row">
 
-	            <div class="col-lg-12">
-	                <h1 class="page-header">
-	                    Welcome to Rental Stage
-	                </h1>
-	            </div>
+	            
 	            <div class="col-md-4">
 	                <div class="panel panel-default">
 	                    <div class="panel-heading">
@@ -55,9 +60,30 @@
 	    </div>
 	  </div>
 
-	  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/javascripts/bootstrap.min.js"></script>
+
+	  
+
+	  	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	    <!-- Include all compiled plugins (below), or include individual files as needed -->
+	    <script src="/javascripts/bootstrap.min.js"></script>
+
+
+	    <script type="text/javascript">
+	  	var jumboHeight = $('.jumbotron-1').outerHeight();
+		function parallax(){
+		    var scrolled = $(window).scrollTop();
+		    $('.bg').css('height', (jumboHeight-scrolled) + "px");
+		}
+
+		$(window).scroll(function(e){
+		    parallax();
+		});
+	  </script>
+
+
+	  <% include ./partials/footer %>
 	  </body>
+
+
 	</html>
