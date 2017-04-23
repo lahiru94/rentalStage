@@ -24,6 +24,10 @@ var property_schema = new Schema({
         type: Number,
         required: true,
     },
+    description: {
+        type: String,
+        required: true,
+    },
     //keep ratings and comments sepaerately
 },{
 	timestamps: true
