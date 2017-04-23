@@ -8,7 +8,15 @@ var property_schema = new Schema({
         type: String,
         required: true,
     },
-    location: {
+    title:{
+        type:String,
+        required:true
+    },
+    district: {
+        type: String,
+        required: true,
+    },
+    address: {
         type: String,
         required: true,
     },
@@ -16,14 +24,7 @@ var property_schema = new Schema({
         type: Number,
         required: true,
     },
-    rating: {
-        type: Number,
-        required: true,
-        default:5
-    },
-    comments: {
-        type: [String],
-    },
+    //keep ratings and comments sepaerately
 },{
 	timestamps: true
 });

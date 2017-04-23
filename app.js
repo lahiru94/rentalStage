@@ -9,6 +9,8 @@ var assert = require('assert');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var flash    = require('connect-flash');
+var session  = require('express-session');
 
 var config = require('./config');
 
@@ -24,8 +26,13 @@ db.once('open', function () {
     console.log("Connected correctly to server");
 });
 
+require('./config/passport')(passport); 
+
+//requiring route files
 var index = require('./routes/index');
 var users = require('./routes/users');
+var property = require('./routes/property');
+
 
 var app = express();
 
@@ -52,6 +59,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// required for passport
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+
+
 //passport config
 // var User = require('./models/user');
 // app.use(passport.initialize());
@@ -63,6 +78,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/property', property);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -81,5 +98,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+
 
 module.exports = app;
