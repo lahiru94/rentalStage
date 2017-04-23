@@ -11,30 +11,52 @@
           <div class="row">
                <div class="col-md-8">
                 <h3>Sign up</h3>
-                <form name="sentMessage" id="contactForm" novalidate="">
+                <form method="post" name="sentMessage" id="contactForm" novalidate="" action="/users/add_user">
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Full Name:</label>
-                            <input class="form-control" id="name" required="" data-validation-required-message="Please enter your name." aria-invalid="false" type="text">
+                            <label>Email:</label>
+                            <input class="form-control" id="username" name ="username" required="" data-validation-required-message="Please enter valid email." aria-invalid="false" type="email">
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="control-group form-group">
+                        <div class="controls">
+                            <label>Password:</label>
+                            <input class="form-control" id="password" name="password" required="" data-validation-required-message="Please enter password." aria-invalid="false" type="text">
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="control-group form-group">
+                        <div class="controls">
+                            <label>First name:</label>
+                            <input class="form-control" id="first_name" name="first_name" required="" data-validation-required-message="Please enter your name." aria-invalid="false" type="text">
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="control-group form-group">
+                        <div class="controls">
+                            <label>Last name:</label>
+                            <input class="form-control" id="last_name" name="last_name" required="" data-validation-required-message="Please enter your name." aria-invalid="false" type="text">
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="control-group form-group">
+                        <div class="controls">
+                            <label>NIC:</label>
+                            <input class="form-control" id="nic" name="nic" required="" data-validation-required-message="Please enter your name." aria-invalid="false" type="text">
                             <p class="help-block"></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Phone Number:</label>
-                            <input class="form-control" id="phone" required="" data-validation-required-message="Please enter your phone number." type="tel">
-                        <div class="help-block"></div></div>
-                    </div>
-                    <div class="control-group form-group">
-                        <div class="controls">
-                            <label>Email Address:</label>
-                            <input class="form-control" id="email" required="" data-validation-required-message="Please enter your email address." type="email">
+                            <input class="form-control" id="contact_no" name="contact_no" required="" data-validation-required-message="Please enter your phone number." type="tel">
                         <div class="help-block"></div></div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Permanent adresss:</label>
-                            <textarea rows="10" cols="100" class="form-control" id="message" required="" data-validation-required-message="Please enter your message" maxlength="999" style="resize:none" aria-invalid="false"></textarea>
+                            <textarea rows="5" cols="100" class="form-control" id="address" name="address" required="" data-validation-required-message="Please enter your adress" maxlength="999" style="resize:none" aria-invalid="false"></textarea>
                         <div class="help-block"></div></div>
                     </div>
                     <div id="success"></div>

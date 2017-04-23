@@ -6,14 +6,22 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb');
 var assert = require('assert');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+var config = require('./config');
 
 //connection url
 var db_url = 'mongodb://localhost:27017/rentalStage';
 
 //connecting to database
-MongoClient.connect(db_url, function(err,db){
-	assert.equal(err,null);
-	console.log("Connected to db successfully!");
+mongoose.connect(db_url);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+    // we're connected!
+    console.log("Connected correctly to server");
 });
 
 var index = require('./routes/index');
@@ -25,12 +33,32 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// function auth(req,res,next){
+//   console.log(req.headers);
+
+//   var authHeader = req.header.authorization;
+//   if(!authHeader){
+//     var err = new Error('Not Authorized');
+//     err.status = 401;
+//     next(err);
+//     return;
+//   }
+// }
+
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+//passport config
+// var User = require('./models/user');
+// app.use(passport.initialize());
+// passport.use(new LocalStrategy(User.authenticate()));
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
