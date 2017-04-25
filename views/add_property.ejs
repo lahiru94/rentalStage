@@ -21,8 +21,8 @@
   <label class="col-md-4 control-label">Title</label>  
   <div class="col-md-4 inputGroupContainer">
   <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-  <input  name="title" placeholder="First Name" class="form-control"  type="text">
+  <span class="input-group-addon"><i class="glyphicon glyphicon-tower"></i></span>
+  <input  name="title" placeholder="Enter suitable title" class="form-control"  type="text">
     </div>
   </div>
 </div>
@@ -36,7 +36,7 @@
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-  <input name="address" placeholder="Address" class="form-control" type="text">
+  <textarea name="address" placeholder="Address" class="form-control" type="text"></textarea>
     </div>
   </div>
 </div>
@@ -46,7 +46,7 @@
 <!-- Select Basic -->
    
 <div class="form-group"> 
-  <label class="col-md-4 control-label">State</label>
+  <label class="col-md-4 control-label">District</label>
     <div class="col-md-4 selectContainer">
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
@@ -87,7 +87,7 @@
         <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
-        <input name="rent" placeholder="monthly rental" class="form-control" type="text">
+        <input name="rent" placeholder="monthly rental" class="form-control" type="number" min="1000">
     </div>
   </div>
         
@@ -170,7 +170,7 @@
             rent: {
                 validators: {
                     integer: {
-                        message: 'Enter proper value'
+                        message: 'Enter proper value',  
                     }
                 }
             },

@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 
 /* add user. */
 router.route('/add_user')
-.get(function(req, res, next) {
+.get(isLoggedIn,function(req, res, next) {
   res.render('add_user', { title: 'Rental stage- sign up' });
 })
 
