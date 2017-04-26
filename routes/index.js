@@ -4,7 +4,7 @@ var passport = require('passport');
 
 /* langing page */
 router.get('/', function(req, res, next) {
-  res.render('landing', { title: 'Rental Stage' });
+  res.render('login', { title: 'Rental Stage-login' });
 });
 
 /* login page */

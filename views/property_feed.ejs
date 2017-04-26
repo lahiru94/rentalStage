@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+    <title>Rental Stage-property feed</title>
+
+    <meta name="author" content="Lahiru de Alwis">
+    <meta name="description" content="<page description>">
+
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+  </head>
+  <body>
+      <% include ./partials/navbar %>
+      <div class="container" style="padding-top: 85px"y>
+        <div class="container">
+        <!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+
+            <div class="col-lg-12">
+                <h1 class="page-header">Available properties
+                    <small>//Distric</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Home</a>
+                    </li>
+                    <li class="active">Browse properties</li>
+                </ol>
+            </div>
+        </div>
+        <!-- /.row -->
+
+      {{#each propertyList}}
+        {{> adBlock}}
+      {{/each}}
+
+
+        <!-- Pagination -->
+        <div class="row text-center">
+            <div class="col-lg-12">
+                <ul class="pagination">
+                    <li>
+                        <a href="#">«</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">1</a>
+                    </li>
+                    <li>
+                        <a href="#">2</a>
+                    </li>
+                    <li>
+                        <a href="#">3</a>
+                    </li>
+                    <li>
+                        <a href="#">4</a>
+                    </li>
+                    <li>
+                        <a href="#">5</a>
+                    </li>
+                    <li>
+                        <a href="#">»</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright © Your Website 2014</p>
+                </div>
+            </div>
+        </footer>
+
+
+  </div>
+
+        
+      </div>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+<template name="adFeed">
+  <div class="container">
+        <!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+
+            <div class="col-lg-12">
+                <h1 class="page-header">Available properties
+                    <small>//Distric</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Home</a>
+                    </li>
+                    <li class="active">Browse properties</li>
+                </ol>
+            </div>
+        </div>
+        <!-- /.row -->
+
+      {{#each propertyList}}
+        {{> adBlock}}
+      {{/each}}
+
+
+        <!-- Pagination -->
+        <div class="row text-center">
+            <div class="col-lg-12">
+                <ul class="pagination">
+                    <li>
+                        <a href="#">«</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">1</a>
+                    </li>
+                    <li>
+                        <a href="#">2</a>
+                    </li>
+                    <li>
+                        <a href="#">3</a>
+                    </li>
+                    <li>
+                        <a href="#">4</a>
+                    </li>
+                    <li>
+                        <a href="#">5</a>
+                    </li>
+                    <li>
+                        <a href="#">»</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright © Your Website 2014</p>
+                </div>
+            </div>
+        </footer>
+
+
+  </div>
+</template>
+
+<template name="adBlock">
+  <div class="row">
+
+    <div class="col-md-1 text-center">
+        <p><i class="glyphicon glyphicon-time"></i>
+        </p>
+        <p>{{createdAt}}</p>
+    </div>
+    <div class="col-md-5">
+        <a href="blog-post.html">
+            <img class="img-responsive img-hover" src="http://placehold.it/600x300" alt="">
+        </a>
+    </div>
+    <div class="col-md-6">
+        <h3>
+            <a href="blog-post.html">{{title}}</a>
+        </h3>
+        <p>by <a href="#">{{author}}</a>
+        </p>
+        <p>{{desc}}</p>
+        <a class="btn btn-primary" href="/ad_feed/view_property/{{propertyId}}">More Details<i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+  <hr>
+</template>

@@ -42,6 +42,11 @@ router.get('/profile', isLoggedIn, function(req, res) {
         });
 });
 
+/* view temp profile */
+router.get('/dashbord', isLoggedIn, function(req, res) {
+        res.send('dashbord goes here!');
+});
+
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
