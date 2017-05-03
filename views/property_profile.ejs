@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Rental Stage</title>
+    <meta name="author" content="Lahiru de Alwis">
+    <meta name="description" content="<page description>">
+
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+  </head>
+  <body>
+	  <% include ./partials/navbar %>
+	  <div class="container" style="padding-top: 85px">
+	  	
+
+        <!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header"><%=property.title%>
+                    <small>by <a href="#"><%=property.owner_id%></a>
+                    </small>
+                </h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Content Row -->
+        <div class="row">
+
+            <!-- Blog Post Content Column -->
+            <div class="col-lg-8">
+
+                <!-- Blog Post -->
+
+                
+
+                <!-- Date/Time -->
+                <p><i class="fa fa-clock-o"></i> Created: <%=property.createdAt%></p>
+
+               
+
+                <!-- Preview Image -->
+                <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+
+                <hr>
+
+                <!-- Post Content -->
+                <p class="lead"><%=property.description%></p>
+                <hr>
+
+                <!-- Blog Comments -->
+
+                <!-- Comments Form -->
+                <div class="well">
+                    <h4>Review</h4>
+                    <hr>
+                    <h5>Rate this property</h5>
+                      <input type="number" max="5" min="1">
+                    <h5>Leave a Comment:</h5>
+                    <form role="form" action="/property/review/<%=property._id%>" method="Post">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3" name="text"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+
+                <hr>
+
+                <!-- Posted Comments -->
+
+                <%if (comments) { %>
+                  <% comments.forEach(function(comment) { %>
+                    <div class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="http://placehold.it/64x64" alt="">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">Start Bootstrap
+                            <small>August 25, 2014 at 9:30 PM</small>
+                        </h4>
+                        <%=comment.text%>
+                    </div>
+                    </div>
+                  <% }); %>
+                <% } else{ %>  
+                   <h4>No comments</h4>
+                   <p>Hey terra!</p>
+                <% } %>
+
+
+                
+                    
+                
+                
+
+                
+
+            </div>
+
+            <!-- Blog Sidebar Widgets Column -->
+            <div class="col-md-4" >
+
+                <!-- Blog Categories Well -->
+                <div class="well" >
+                    <h4>Details</h4>
+                    <div class="row">
+                      <table class="table table-condensed">
+                        <tbody>
+                          <tr>
+                            <td>Address:</td>
+                            <td><%=property.address%></td>
+                          </tr>
+                          <tr>
+                            <td>District:</td>
+                            <td><%=property.district%></td>
+                          </tr>
+                          <tr>
+                            <td>Monthly rental(LKR):</td>
+                            <td><%=property.rent%></td>
+                          </tr>
+                          <tr>
+                            <td>Rating:</td>
+                            <td>Detail</td>
+                          </tr>
+                        </tbody>
+                      </table>    
+                    </div>
+                    <!-- /.row -->
+                </div>
+
+                <!-- Side Widget Well -->
+                <div class="well">
+                    <h4>Submit a request</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
+                    <button href='#' >Request</button>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright © Your Website 2014</p>
+                </div>
+            </div>
+        </footer>
+
+    
+	  </div>
+  </body>
+</html>

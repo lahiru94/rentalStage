@@ -3,6 +3,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var Property = require('../models/property');
+var Comment = require('../models/comment');
+var Rating = require('../models/rating');
 
 var router = express.Router();
 
@@ -16,9 +18,8 @@ router.route('/add_property')
 })
 .post(isLoggedIn,function(req, res, next){
 
-	console.log(req.user);
 	Property.create({
-    	owner_id:req.user,
+    	owner_id:req.user.email,
     	title: req.body.title,
     	district: req.body.district,
     	address: req.body.address,
@@ -37,9 +38,46 @@ router.route('/property_feed')
 .get(isLoggedIn,function(req,res,next){
     Property.find({},function(err,properties){
         if(err) throw err;
-        res.send(properties);
+        res.render('property_feed.ejs',{'properties':properties});
     });
 });
+
+
+
+
+
+router.route('/property_profile/:id')
+.get(isLoggedIn,function(req,res,next){
+    Comment.find({property_id:req.params.id},function(err,comment,next){
+        console.log(comment);
+        Property.findById(req.params.id,function(err,property,next){
+            res.render('property_profile.ejs',{'property':property,'comments':comment});
+            if(err) throw err;
+        });
+    });
+
+    
+});
+
+
+
+router.route('/review/:id')//here id is the property id
+.post(isLoggedIn,function(req,res,next){
+    Comment.create({
+        property_id:req.params.id,
+        commenter_id:req.user._id,
+        text:req.body.text
+    },function(err,comment){
+        if(err) throw err;
+        res.redirect('/property/property_profile/'+comment.property_id);
+    });
+})
+.get(isLoggedIn,function(req,res,next){
+    req.send('sending coments for requested property');
+});
+
+
+
 
 
 
