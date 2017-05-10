@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var Property = require('../models/property');
 var Comment = require('../models/comment');
 var Rating = require('../models/rating');
+var RentRequest = require('../models/rent_request');
 
 var router = express.Router();
 
@@ -77,8 +78,19 @@ router.route('/review/:id')//here id is the property id
 });
 
 
+router.route('/request/:id')  //here id is the property id
+.post(isLoggedIn,function(req,res,next){
+    RentRequest.create({
+        property_id :req.params.id,
+        requester_id :req.user._id,
+        requester_name :'name',
+        message:req.body.message
+    },function(err,rental_request){
+        if(err) throw err;
 
-
+        res.redirect('/property/property_profile/'+rental_request.property_id);
+    });
+});
 
 
 

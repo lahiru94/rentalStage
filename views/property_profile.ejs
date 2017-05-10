@@ -133,7 +133,11 @@
                 <div class="well">
                     <h4>Submit a request</h4>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
-                    <button href='#' >Request</button>
+                    <form action="/property/request/<%=property._id%>" method="post">
+                      <textarea name="message" id="" cols="30" rows="5"></textarea>
+                      <button type="submit">Request</button>
+                    </form>
+                    
                 </div>
 
             </div>
