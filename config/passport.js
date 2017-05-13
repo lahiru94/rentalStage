@@ -97,6 +97,11 @@ module.exports = function(passport) {
 
                         newUser.local.email    = email;
                         newUser.local.password = newUser.generateHash(password);
+                        newUser.first_name     = req.body.first_name;
+                        newUser.last_name      = req.body.last_name;
+                        newUser.address        = req.body.address;
+                        newUser.nic            = req.body.nic;
+                        newUser.contact_no     = req.body.contact_no;
 
                         newUser.save(function(err) {
                             if (err)
@@ -122,6 +127,12 @@ module.exports = function(passport) {
                         var user = req.user;
                         user.local.email = email;
                         user.local.password = user.generateHash(password);
+                        user.first_name     = req.body.first_name;
+                        user.last_name      = req.body.last_name;
+                        user.address        = req.body.address;
+                        user.nic            = req.body.nic;
+                        user.contact_no     = req.body.contact_no;
+
                         user.save(function (err) {
                             if (err)
                                 return done(err);

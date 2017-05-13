@@ -6,6 +6,8 @@ var Property = require('../models/property');
 var Comment = require('../models/comment');
 var Rating = require('../models/rating');
 var RentRequest = require('../models/rent_request');
+var User = require('../models/user');
+var Agreement = require('../models/agreement');
 
 var router = express.Router();
 
@@ -20,7 +22,7 @@ router.route('/add_property')
 .post(isLoggedIn,function(req, res, next){
 
 	Property.create({
-    	owner_id:req.user.email,
+    	owner_id:req.user._id,
     	title: req.body.title,
     	district: req.body.district,
     	address: req.body.address,
@@ -60,6 +62,21 @@ router.route('/property_profile/:id')
     
 });
 
+router.route('/my_property_profile/:id')
+.get(isLoggedIn,function(req,res,next){
+    Comment.find({property_id:req.params.id},function(err,comment,next){
+        Property.findById(req.params.id,function(err,property,next){
+            RentRequest.find({property_id:req.params.id,status:"pending"},function(err,requests){
+                if(err) throw err;
+                res.render('my_property_profile.ejs',{'property':property,'comments':comment,'requests':requests});
+            });
+            
+        });
+    });
+
+    
+});
+
 
 
 router.route('/review/:id')//here id is the property id
@@ -74,24 +91,53 @@ router.route('/review/:id')//here id is the property id
     });
 })
 .get(isLoggedIn,function(req,res,next){
-    req.send('sending coments for requested property');
+    req.send('sending comments for requested property');
 });
 
 
 router.route('/request/:id')  //here id is the property id
 .post(isLoggedIn,function(req,res,next){
-    RentRequest.create({
-        property_id :req.params.id,
-        requester_id :req.user._id,
-        requester_name :'name',
-        message:req.body.message
-    },function(err,rental_request){
-        if(err) throw err;
-
-        res.redirect('/property/property_profile/'+rental_request.property_id);
-    });
+    User.findById(req.user._id,function(err,user){
+        Property.findById(req.params.id,function(err,property){
+        RentRequest.create({
+            property_id :req.params.id,
+            requester_id :req.user._id,
+            requester_name :user.first_name+user.last_name,
+            reciever_id:property.owner_id,
+            message:req.body.message
+            },function(err,rental_request){
+                if(err) throw err;
+                res.redirect('/property/property_profile/'+rental_request.property_id);
+        });
+    });    
+    });   
 });
 
+
+
+
+router.route('/reserve/:id')//request id
+.get(isLoggedIn,function(req,res,next){
+    RentRequest.findByIdAndUpdate(req.params.id,{status:"accpeted"},function(err,rent_request){
+        Agreement.create({
+            property_id : rent_request.property_id,
+            landlord_id : rent_request.reciever_id,
+            tenant_id   : rent_request.requester_id,
+        },function(err,agreement){
+            RentRequest.update({
+                property_id : rent_request.property_id,
+                status: "pending"
+            },{status:"rejected"},
+            {"multi":true},function(err){
+                Property.findByIdAndUpdate(rent_request.property_id,{status:"reserved"},function(err,property){
+                    res.redirect('/property/my_property_profile/'+rent_request.property_id);
+                });
+                
+            });
+            
+        });
+    });
+});
 
 
 

@@ -16,6 +16,10 @@ var rent_request_schema = new Schema({
         type:String,
         required:true
     },
+    reciever_id:{
+        type:String,
+        require:true
+    },
     message: {
         type: String,
         required:false

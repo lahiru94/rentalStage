@@ -18,15 +18,16 @@ var agreement_schema = new Schema({
     },
     start_date: {
         type: Date,
-        required: true,
     },
     end_date: {
         type: Date,
-        required: true,
     },
     rent: {
         type: Number,
-        required: true,
+    },
+    status:{
+        type:String,
+        default:"pending"
     },
     
 },{

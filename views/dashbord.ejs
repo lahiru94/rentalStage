@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <title>Rental Stage</title>
+
+    <meta name="author" content="Lahiru de Alwis">
+    <meta name="description" content="<page description>">
+
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+  </head>
+  <body>
+	  <% include ./partials/navbar %>
+	  <div class="container" style="padding-top: 85px"y>
+      <h1 class="page-header">Dashbord
+      </h1>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Notifications</h3>
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <tbody>
+                  <%requests.forEach(function(request){%>
+                  <tr>
+                    <td><%=request.requester_name%></td>
+                    <td><%=request.property_id%></td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+	  	<div class="row">
+        <div class="col-md-7">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">In progress activites</h3>
+            </div>
+            <div class="panel-body">
+              Panel content
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">My properties</h3>
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <tbody>
+                  <%properties.forEach(function(property){%>
+                  <tr>
+                    <td><a href="/property/my_property_profile/<%=property._id%>"><%=property.title%></a></td>
+                    <td><%=property.status%></td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>  
+      </div>
+      
+	  </div>
+  </body>
+</html>

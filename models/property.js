@@ -28,6 +28,11 @@ var property_schema = new Schema({
         type: String,
         required: true,
     },
+    status:{
+        type:String,
+        default:"available",
+        enum:["available","reserved","rented"]
+    }
     //keep ratings and comments sepaerately
 },{
 	timestamps: true
