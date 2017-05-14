@@ -120,6 +120,7 @@ router.route('/reserve/:id')//request id
 .get(isLoggedIn,function(req,res,next){
     RentRequest.findByIdAndUpdate(req.params.id,{status:"accpeted"},function(err,rent_request){
         Agreement.create({
+            title       : "Pending agreement for ",
             property_id : rent_request.property_id,
             landlord_id : rent_request.reciever_id,
             tenant_id   : rent_request.requester_id,
@@ -130,7 +131,9 @@ router.route('/reserve/:id')//request id
             },{status:"rejected"},
             {"multi":true},function(err){
                 Property.findByIdAndUpdate(rent_request.property_id,{status:"reserved"},function(err,property){
-                    res.redirect('/property/my_property_profile/'+rent_request.property_id);
+                    Agreement.findByIdAndUpdate(agreement._id,{rent:property.rent},function(err,agreement2){
+                        res.redirect('/property/my_property_profile/'+rent_request.property_id);
+                    });  
                 });
                 
             });

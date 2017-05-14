@@ -32,6 +32,7 @@ require('./config/passport')(passport);
 var index = require('./routes/index');
 var users = require('./routes/users');
 var property = require('./routes/property');
+var rent_agreement = require('./routes/rent_agreement');
 
 
 var app = express();
@@ -79,6 +80,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/property', property);
+app.use('/rent_agreement',rent_agreement);
 
 
 // catch 404 and forward to error handler

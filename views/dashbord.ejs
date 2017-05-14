@@ -24,10 +24,14 @@
             <div class="panel-body">
               <table class="table">
                 <tbody>
-                  <%requests.forEach(function(request){%>
+                  <%rent_requests.forEach(function(request){%>
                   <tr>
-                    <td><%=request.requester_name%></td>
+                    <td><%=request.requester_name%> has requsted to rent your property</td>
                     <td><%=request.property_id%></td>
+                    <td> <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-user"></span></a> </td>
+                    <td><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a></td>
+                    <td> <a href="#" class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span>    </a> </td>
+                    <td><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></td>
                   </tr>
                   <% }); %>
                 </tbody>
@@ -43,7 +47,35 @@
               <h3 class="panel-title">In progress activites</h3>
             </div>
             <div class="panel-body">
-              Panel content
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th>Agreement title</th>
+                    <th>Agrement type</th>
+                    <th>status</th>
+                  </tr>
+                  <%agreements_landlord.forEach(function(agreement){%>
+                    <tr>
+                    <td>Test title</td>
+                    <td>rented out</td>
+                    <td><%=agreement.status%></td>
+                    <td><% if(agreement.status=="pending"){ %>
+                      <a class = "btn btn-default" href="/rent_agreement/activate/<%=agreement._id%>">Activate</a>
+                      <% } else{ %>  
+                       <a class = "btn btn-default" href="/rent_agreement/view/<%=agreement._id%>">View details</a>
+                      <% } %>
+                    </td>
+                    </tr>
+                  <% }); %>
+                  <%agreements_tenant.forEach(function(agreement){%>
+                    <tr>
+                    <td>Test title</td>
+                    <td>rented</td>
+                    <td><%=agreement.status%></td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -67,7 +99,10 @@
           </div>
         </div>  
       </div>
-      
 	  </div>
+
+    
+
+    
   </body>
 </html>

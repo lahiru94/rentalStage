@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var User = require('../models/user');
 var RentRequest = require('../models/rent_request');
 var Property = require('../models/property');
+var Agreement = require('../models/agreement');
 
 var router = express.Router();
 
@@ -44,15 +45,23 @@ router.get('/profile', isLoggedIn, function(req, res) {
         });
 });
 
-/* view temp profile */
+/* view dashbord*/
 router.get('/dashbord', isLoggedIn, function(req, res) {
-      RentRequest.find({},function(err, requests){
+      RentRequest.find({reciever_id:req.user._id,status:"pending"},function(err, requests){
         if(err) throw err;
         Property.find({owner_id:req.user._id},function(err,properties){
-          res.render('dashbord.ejs',{'requests':requests,'properties':properties});
+          Agreement.find({$or:[{landlord_id:req.user._id,status:"pending"},{landlord_id:req.user._id,status:"active"}]},function(err,agreements_landlord){
+            Agreement.find({$or:[{tenant_id:req.user._id,status:"pending"},{tenant_id:req.user._id,status:"active"}]},function(err,agreements_tenant){
+              res.render('dashbord.ejs',
+                {
+                 'rent_requests':requests,
+                 'properties':properties,
+                 'agreements_tenant':agreements_tenant,
+                 'agreements_landlord':agreements_landlord
+                });
+            });
+          });  
         });
-        
-
       });
         
 });

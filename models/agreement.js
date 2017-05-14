@@ -4,7 +4,11 @@ var Schema = mongoose.Schema;
 
 //creating schema
 var agreement_schema = new Schema({
-	property_id: {
+	title: {
+        type: String,
+        required: true,
+    },
+    property_id: {
         type: String,
         required: true,
     },

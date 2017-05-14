@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <title>Rental Stage</title>
+
+    <meta name="author" content="Lahiru de Alwis">
+    <meta name="description" content="form for activating rental agreement">
+
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+  </head>
+  <body>
+	  <% include ./partials/navbar %>
+	  <div class="container" style="padding-top: 85px"y>
+	  	<form class="well form-horizontal" action="/rent_agreement/activate/<%=agreement._id%>" method="post">
+
+      <div class="form-group">
+      <label class="col-md-4 control-label">Title</label>  
+      <div class="col-md-4 inputGroupContainer">
+      <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+      <input  name="title" placeholder="Title for agreement" class="form-control"  type="text">
+        </div>
+      </div>
+      </div>
+
+      <div class="form-group">
+      <label class="col-md-4 control-label">Starting date</label>  
+      <div class="col-md-4 inputGroupContainer">
+      <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+      <input  name="start_date" placeholder="Title for agreement" class="form-control"  type="date">
+        </div>
+      </div>
+      </div>
+
+      <div class="form-group">
+      <label class="col-md-4 control-label">Ending date</label>  
+      <div class="col-md-4 inputGroupContainer">
+      <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+      <input  name="end_date" placeholder="Title for agreement" class="form-control"  type="date">
+        </div>
+      </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-4 control-label"></label>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-warning" >Submit <span class="glyphicon glyphicon-send"></span></button>
+        </div>
+      </div>
+      
+
+      </form>
+	  </div>
+  </body>
+</html>
