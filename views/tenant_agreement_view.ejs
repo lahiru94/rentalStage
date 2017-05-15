@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <title>Rental Stage</title>
+
+    <meta name="author" content="Lahiru de Alwis">
+    <meta name="description" content="<page description>">
+
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+  </head>
+  <body>
+    <% include ./partials/navbar %>
+    <div class="container" style="padding-top: 85px">
+    <h1 class="page-header">Rent agreement details
+      </h1>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Agreement details</h3>
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>Agreement title:</td>
+                    <td><%=agreement.title%> </td>
+                  </tr>
+                  <tr>
+                    <td>Prperty title:</td>
+                    <td><%=property.title%></td>
+                  </tr>
+                  <tr>
+                    <td>Landlord:</td>
+                    <td><%=landlord.first_name%> <%=landlord.last_name%></td>
+                  </tr>
+                  <tr>
+                    <td>Tenant:</td>
+                    <td><%=tenant.first_name%> <%=tenant.last_name%></td>
+                  </tr>
+                  <tr>
+                    <td>Starting date:</td>
+                    <td><%=agreement.start_date.toDateString()%></td>
+                  </tr>
+                  <tr>
+                    <td>Ending date:</td>
+                    <td><%=agreement.end_date.toDateString()%></td>
+                  </tr>
+                  <tr>
+                    <td>Monthly rental(LKR):</td>
+                    <td><%=agreement.rent%></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Notifications</h3>
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>sample data</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+            <div class="row">
+              <div class="col-md-9">
+                <h3 class="panel-title">Payment records
+              </h3>
+              </div>
+              <div class="col-md-3">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn right" data-toggle="modal" data-target="#myModal">
+                Add new payment record
+                </button>
+              </div>
+            </div>
+              
+
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <thead>
+                  <th>Month</th>
+                  <th>Payment type</th>
+                  <th>Record status</th>
+                </thead>
+                <tbody>
+                <%payment_records.forEach(function(record){%>
+                <tr>
+                  <td><%=record.month%>-<%=record._id.getTimestamp().getFullYear()%></td>
+                  <td><%=record.payment_type%></td>
+                  <td><%=record.status%></td>
+                </tr>
+                <% }); %>
+
+                     
+                  </tr>
+                </tbody>
+               
+
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+
+
+    
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Add new payment record</h4>
+          </div>
+          <div class="modal-body">
+            <form action="/rent_agreement/add_payment_record/<%=agreement._id%>" method="post">
+
+            <div class="form-group">
+              <label class="col-md-4 control-label">Select month</label> 
+                <select class="form-control" id="month" name="month"><span class="pln">
+                </span><option value="0"><span class="typ">Month</span></option><option><span class="pln">
+                </span></option><option value="January"><span class="typ">January</span></option><option><span class="pln">
+                </span></option><option value="February"><span class="typ">February</span></option><option><span class="pln">
+                </span></option><option value="March"><span class="typ">March</span></option><option><span class="pln">
+                </span></option><option value="April"><span class="typ">April</span></option><option><span class="pln">
+                </span></option><option value="May"><span class="typ">May</span></option><option><span class="pln">
+                </span></option><option value="June"><span class="typ">June</span></option><option><span class="pln">
+                </span></option><option value="July"><span class="typ">July</span></option><option><span class="pln">
+                </span></option><option value="August"><span class="typ">August</span></option><option><span class="pln">
+                </span></option><option value="September"><span class="typ">September</span></option><option><span class="pln">
+                </span></option><option value="October"><span class="typ">October</span></option><option><span class="pln">
+                </span></option><option value="November"><span class="typ">November</span></option><option><span class="pln">
+                </span></option><option value="December"><span class="typ">December</span></option><option>
+              </option></select>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label">Select payment type</label> 
+                <select class="form-control" id="type" name="payment_type"><span class="pln">
+                </span><option value="0"><span class="typ">Payment type</span></option><option><span class="pln">
+                </span></option><option value="cash"><span class="typ">Cash</span></option><option><span class="pln">
+                </span></option><option value="chequeue"><span class="typ">Chequeue</span></option><option><span class="pln">
+                </span></option><option value="bank_deposit"><span class="typ">Bank deposit</span></option><option><span class="pln">
+                </span></option><option value="4"><span class="other">Other</span></option><option><span class="pln">
+                </span></option></select>
+            </div>
+             
+              <button type="submit" class=" btn btn-primary" style="float: right;" >Send <span class="glyphicon glyphicon-send"></span></button>
+
+              <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right;">Close</button>
+                
+            </form>
+          </div>
+          <div class="modal-footer">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"> </script>
+      <!-- Include all compiled plugins (below), or include individual files as needed -->
+      <script src="/javascripts/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+      })
+    </script>
+  </body>
+</html>
+

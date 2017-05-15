@@ -6,6 +6,7 @@ var User = require('../models/user');
 var RentRequest = require('../models/rent_request');
 var Property = require('../models/property');
 var Agreement = require('../models/agreement');
+var Notification = require('../models/notification');
 
 var router = express.Router();
 
@@ -52,13 +53,16 @@ router.get('/dashbord', isLoggedIn, function(req, res) {
         Property.find({owner_id:req.user._id},function(err,properties){
           Agreement.find({$or:[{landlord_id:req.user._id,status:"pending"},{landlord_id:req.user._id,status:"active"}]},function(err,agreements_landlord){
             Agreement.find({$or:[{tenant_id:req.user._id,status:"pending"},{tenant_id:req.user._id,status:"active"}]},function(err,agreements_tenant){
-              res.render('dashbord.ejs',
+              Notification.find({reciever_id:req.user._id,status:"unseen"},function(err,notifications){
+                res.render('dashbord.ejs',
                 {
                  'rent_requests':requests,
                  'properties':properties,
                  'agreements_tenant':agreements_tenant,
-                 'agreements_landlord':agreements_landlord
-                });
+                 'agreements_landlord':agreements_landlord,
+                 'notifications':notifications
+              });
+              })
             });
           });  
         });

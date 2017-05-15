@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <title>Rental Stage</title>
+
+    <meta name="author" content="Lahiru de Alwis">
+    <meta name="description" content="<page description>">
+
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+  </head>
+  <body>
+	  <% include ./partials/navbar %>
+	  <div class="container" style="padding-top: 85px">
+    <h1 class="page-header">Rent agreement details
+      </h1>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Agreement details</h3>
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>Agreement title:</td>
+                    <td><%=agreement.title%> </td>
+                  </tr>
+                  <tr>
+                    <td>Prperty title:</td>
+                    <td><%=property.title%></td>
+                  </tr>
+                  <tr>
+                    <td>Landlord:</td>
+                    <td><%=landlord.first_name%> <%=landlord.last_name%></td>
+                  </tr>
+                  <tr>
+                    <td>Tenant:</td>
+                    <td><%=tenant.first_name%> <%=tenant.last_name%></td>
+                  </tr>
+                  <tr>
+                    <td>Starting date:</td>
+                    <td><%=agreement.start_date.toDateString()%></td>
+                  </tr>
+                  <tr>
+                    <td>Ending date:</td>
+                    <td><%=agreement.end_date.toDateString()%></td>
+                  </tr>
+                  <tr>
+                    <td>Monthly rental(LKR):</td>
+                    <td><%=agreement.rent%></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Messages</h3>
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>sample data</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Payment records</h3>
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <thead>
+                  <th>Month</th>
+                  <th>Payment type</th>
+                  <th>Record status</th>
+                </thead>
+                <tbody>
+                  <%payment_records.forEach(function(record){%>
+                  <tr>
+                    <td><%=record.month%>-<%=record._id.getTimestamp().getFullYear()%></td>
+                    <td><%=record.payment_type%></td>
+                    <td><%=record.status%></td>
+                    <% if(record.status=="pending"){ %>
+                    <td> <a href="/rent_agreement/reject_payment/<%=record._id%>" class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span>    </a> </td>
+                    <td><a href="/rent_agreement/accept_payment/<%=record._id%>" class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></td>
+                    <% } %>
+                  </tr>
+                  <% }); %>    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>	
+	  </div>
+  </body>
+</html>
+

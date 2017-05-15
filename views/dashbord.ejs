@@ -24,6 +24,16 @@
             <div class="panel-body">
               <table class="table">
                 <tbody>
+                  <%notifications.forEach(function(notification){%>
+                  <% if(notification.type=="payment_record"){ %>
+                  <tr>
+                    <td>New payment record has been submitted</td>
+                    <td><a href="/rent_agreement/landlord/view_details/<%=notification.agreement_id%>" class="btn btn-default"><span class="glyphicon glyphicon-file"></span></a></td>
+                    <td> <a href="/rent_agreement/reject_payment/<%=notification.activity_record_id%>" class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span>    </a> </td>
+                    <td><a href="/rent_agreement/accept_payment/<%=notification.activity_record_id%>" class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></td>
+                  </tr>
+                  <% } %>
+                  <% }); %>
                   <%rent_requests.forEach(function(request){%>
                   <tr>
                     <td><%=request.requester_name%> has requsted to rent your property</td>
@@ -62,15 +72,20 @@
                     <td><% if(agreement.status=="pending"){ %>
                       <a class = "btn btn-default" href="/rent_agreement/activate/<%=agreement._id%>">Activate</a>
                       <% } else{ %>  
-                       <a class = "btn btn-default" href="/rent_agreement/view/<%=agreement._id%>">View details</a>
+                       <a class = "btn btn-default" href="/rent_agreement/landlord/view_details/<%=agreement._id%>">View details</a>
                       <% } %>
                     </td>
                     </tr>
                   <% }); %>
                   <%agreements_tenant.forEach(function(agreement){%>
                     <tr>
-                    <td>Test title</td>
-                    <td>rented</td>
+                    <td><%=agreement.title%></td>
+                    <td><% if(agreement.status=="pending"){ %>
+                      <p>awaiting activation</p>
+                      <% } else{ %>  
+                       <a class = "btn btn-default" href="/rent_agreement/tenant/view_details/<%=agreement._id%>">View details</a>
+                      <% } %>
+                      </td>
                     <td><%=agreement.status%></td>
                     </tr>
                   <% }); %>

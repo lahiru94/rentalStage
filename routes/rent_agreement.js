@@ -8,6 +8,9 @@ var Rating = require('../models/rating');
 var RentRequest = require('../models/rent_request');
 var User = require('../models/user');
 var Agreement = require('../models/agreement');
+var Notification = require('../models/notification');
+var Payment_record = require('../models/rent_payment_record');
+
 
 var router = express.Router();
 
@@ -34,9 +37,97 @@ router.route('/activate/:id')//this id is the agreement id
 		});
 });
 
+router.route('/landlord/view_details/:id')//rent agreement id is reffered
+.get(isLoggedIn,function(req,res,next){
+	Agreement.findById(req.params.id,function(err,agreement){
+		User.findById(agreement.landlord_id,function(err,landlord){
+			User.findById(agreement.tenant_id,function(err,tenant){
+				Property.findById(agreement.property_id,function(err,property){
+					Payment_record.find({agreement_id:agreement._id},function(err,payment_records){
+						Notification.find({agreement_id:agreement._id,status:"unseen",reciever_id:agreement.landlord_id},function(err,notifications){
+							res.render('landlord_agreement_view.ejs',{
+							'agreement':agreement,
+							'landlord':landlord,
+							'tenant': tenant,
+							'property':property,
+							'payment_records':payment_records,
+							'notifications':notifications
+							});
+						});
+					});
+				});
+			});
+		});
+	});
+});
 
 
+router.route('/tenant/view_details/:id')//rent agreement id is reffered
+.get(isLoggedIn,function(req,res,next){
+	Agreement.findById(req.params.id,function(err,agreement){
+		User.findById(agreement.landlord_id,function(err,landlord){
+			User.findById(agreement.tenant_id,function(err,tenant){
+				Property.findById(agreement.property_id,function(err,property){
+					Payment_record.find({agreement_id:agreement._id},function(err,payment_records){
+						Notification.find({agreement_id:agreement._id,status:"unseen",reciever_id:agreement.tenant_id},function(err,notifications){
+							res.render('tenant_agreement_view.ejs',{
+							'agreement':agreement,
+							'landlord':landlord,
+							'tenant': tenant,
+							'property':property,
+							'payment_records':payment_records,
+							'notifications':notifications
+							});
+						});
+					});
+					
+				});
+			});
+		});
+	});
+});
 
+router.route('/add_payment_record/:id')
+.post(isLoggedIn,function(req,res,next){
+	Agreement.findById(req.params.id,function(err,agreement){
+		Payment_record.create({
+			agreement_id:agreement._id,
+			month:req.body.month,
+			payment_type:req.body.payment_type
+		},function(err,payment_record){
+			Notification.create({
+				agreement_id:agreement._id,
+				reciever_id:agreement.landlord_id,
+				type:"payment_record",
+				month:req.body.month,
+				activity_record_id:payment_record._id
+
+			},function(err,notification){
+				res.redirect('/rent_agreement/tenant/view_details/'+agreement._id);
+			});
+
+		});
+	});
+	//create notification along with the pending record
+});
+
+router.route('/accept_payment/:id')//this is payment record id
+.get(isLoggedIn,function(req,res){
+	Payment_record.findByIdAndUpdate(req.params.id,{status:"accepted"},function(err,payment_record){
+		Notification.findOneAndUpdate({activity_record_id:req.params.id},{status:"discarded"},function(err,notification){
+			res.redirect('/rent_agreement/landlord/view_details/'+payment_record.agreement_id);
+		});
+	});
+});
+
+router.route('/reject_payment/:id')//this is payment record id
+.get(isLoggedIn,function(req,res){
+	Payment_record.findByIdAndUpdate(req.params.id,{status:"rejected"},function(err,payment_record){
+		Notification.findOneAndUpdate({activity_record_id:req.params.id},{status:"discarded"},function(err,notification){
+			res.redirect('/rent_agreement/landlord/view_details/'+payment_record.agreement_id);
+		});
+	});
+});
 
 
 

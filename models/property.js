@@ -8,6 +8,10 @@ var property_schema = new Schema({
         type: String,
         required: true,
     },
+    owner_name:{
+        type:String,
+        required:true
+    },
     title:{
         type:String,
         required:true

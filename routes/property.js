@@ -20,19 +20,22 @@ router.route('/add_property')
 
 })
 .post(isLoggedIn,function(req, res, next){
-
-	Property.create({
-    	owner_id:req.user._id,
-    	title: req.body.title,
-    	district: req.body.district,
-    	address: req.body.address,
-    	rent: parseInt(req.body.rent),
-    	description: req.body.description
+    User.findById(req.user._id,function(err,owner){
+        Property.create({
+        owner_id:req.user._id,
+        owner_name:owner.first_name+" "+owner.last_name,
+        title: req.body.title,
+        district: req.body.district,
+        address: req.body.address,
+        rent: parseInt(req.body.rent),
+        description: req.body.description
     }, function(err,property){
-    	if(err) throw err;
-    	res.redirect('/users/dashbord');
+        if(err) throw err;
+        res.redirect('/users/dashbord');
     }
-    );
+    );        
+    });
+	
 });
 
 
