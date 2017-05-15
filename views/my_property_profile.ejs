@@ -41,6 +41,15 @@
                 <!-- Preview Image -->
                 <img class="img-responsive" src="http://placehold.it/900x300" alt="">
 
+                <form ref='uploadForm' 
+                  id='uploadForm' 
+                  action='/property/upload_image/<%=property._id%>' 
+                  method='post' 
+                    <p>update picture</p>
+                    <input class="file" type="file" name="property_image" />
+                    <input type='submit' value='Upload!' />
+                </form> 
+
                 <hr>
 
                 <!-- Post Content -->

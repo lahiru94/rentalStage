@@ -1,6 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var fileUpload = require('express-fileupload');
+var ImageResize = require('node-image-resize');
+var fs = require('fs');
 
 var Property = require('../models/property');
 var Comment = require('../models/comment');
@@ -14,7 +17,7 @@ var router = express.Router();
 
 
 router.route('/add_property')
-.get(function(req,res,next){
+.get(isLoggedIn, function(req,res,next){
 
 	res.render('add_property.ejs');
 
@@ -29,15 +32,26 @@ router.route('/add_property')
         address: req.body.address,
         rent: parseInt(req.body.rent),
         description: req.body.description
-    }, function(err,property){
-        if(err) throw err;
-        res.redirect('/users/dashbord');
-    }
-    );        
+        }, function(err,property){
+            if(err) throw err;
+            res.redirect('/users/dashbord');
+        }
+        );        
     });
 	
 });
 
+router.route('/upload_image/:id')
+.post(isLoggedIn,function(req,res){
+    console.log("test");
+  var property_image = req.files.property_image;
+ 
+  // Use the mv() method to place the file somewhere on your server 
+  property_image.mv('../data/images/filename.jpg', function(err) {
+    if (err) return err;
+    res.redirect('/property/property_profile/'+req.params.id);
+  });
+});
 
 
 router.route('/property_feed')

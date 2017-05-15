@@ -11,6 +11,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var flash    = require('connect-flash');
 var session  = require('express-session');
+var fileUpload = require('express-fileupload');
 
 var config = require('./config');
 
@@ -41,17 +42,6 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// function auth(req,res,next){
-//   console.log(req.headers);
-
-//   var authHeader = req.header.authorization;
-//   if(!authHeader){
-//     var err = new Error('Not Authorized');
-//     err.status = 401;
-//     next(err);
-//     return;
-//   }
-// }
 
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -59,6 +49,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(fileUpload());
 
 // required for passport
 app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
@@ -66,14 +57,6 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-
-
-//passport config
-// var User = require('./models/user');
-// app.use(passport.initialize());
-// passport.use(new LocalStrategy(User.authenticate()));
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
