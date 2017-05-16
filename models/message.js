@@ -3,34 +3,29 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 //creating schema
-var comment_schema = new Schema({
-	property_id: {
+var message_schema = new Schema({
+    agreement_id: {
         type: String,
         required: true,
     },
-    commenter_id: {
+    sender_id: {
         type: String,
         required: true,
     },
-    commenter_name:{
+    reciever_id:{
         type:String,
-        required:true
+        require:true
     },
-    text: {
+    message: {
         type: String,
-        required: true,
+        required:false
     },
-    rating:{
-        type:Number,
-        required:true,
-    }
-    
 },{
-	timestamps: true
+    timestamps: true
 });
 
 //creating model 
-var Comments = mongoose.model('Comment',comment_schema);
+var Message = mongoose.model('Message',message_schema);
 
 // make the model available to the application.
-module.exports = Comments;
+module.exports = Message;

@@ -12,7 +12,7 @@
   </head>
   <body>
 	  <% include ./partials/navbar %>
-	  <div class="container" style="padding-top: 85px"y>
+	  <div class="container" style="padding-top: 85px">
       <h1 class="page-header">Dashbord
       </h1>
       <div class="row">
@@ -40,7 +40,7 @@
                     <td><%=request.property_id%></td>
                     <td> <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-user"></span></a> </td>
                     <td><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a></td>
-                    <td> <a href="#" class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span>    </a> </td>
+                    <td> <a href="/property/reject_request/<%=request._id%>" class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span>    </a> </td>
                     <td><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></td>
                   </tr>
                   <% }); %>

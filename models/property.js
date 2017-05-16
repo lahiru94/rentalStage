@@ -36,6 +36,10 @@ var property_schema = new Schema({
         type:String,
         default:"available",
         enum:["available","reserved","rented"]
+    },
+    rating:{
+        type:Number,
+        default:10
     }
     //keep ratings and comments sepaerately
 },{

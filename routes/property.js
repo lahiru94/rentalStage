@@ -98,14 +98,30 @@ router.route('/my_property_profile/:id')
 
 router.route('/review/:id')//here id is the property id
 .post(isLoggedIn,function(req,res,next){
-    Comment.create({
-        property_id:req.params.id,
-        commenter_id:req.user._id,
-        text:req.body.text
-    },function(err,comment){
-        if(err) throw err;
-        res.redirect('/property/property_profile/'+comment.property_id);
+    User.findById(req.user._id,function(err,user){
+        Comment.create({
+            property_id:req.params.id,
+            commenter_id:req.user._id,
+            text:req.body.text,
+            rating:req.body.rating,
+            commenter_name:user.first_name+" "+user.last_name
+        },function(err,comment){
+            Comment.find({property_id:req.params.id},function(err,comments){
+                count = comments.length;
+                var tot = 0;
+                for (var i = 0; i < count; i++) {
+                    tot = tot + comments[i].rating;
+                }
+                var new_rating = tot/count;
+                Property.findByIdAndUpdate(req.params.id,{rating:new_rating},function(err,property){
+                    if(err) throw err;
+                    res.redirect('/property/property_profile/'+comment.property_id);
+                });
+            });
+            
+        });
     });
+    
 })
 .get(isLoggedIn,function(req,res,next){
     req.send('sending comments for requested property');
@@ -156,6 +172,13 @@ router.route('/reserve/:id')//request id
             });
             
         });
+    });
+});
+
+router.route('/reject_request/:id')
+.get(isLoggedIn,function(req,res){
+    RentRequest.findByIdAndUpdate(req.params.id,{status:"rejected"},function(err,request){
+        res.redirect('/users/dashbord/');  
     });
 });
 

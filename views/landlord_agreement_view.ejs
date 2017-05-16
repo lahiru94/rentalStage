@@ -65,11 +65,39 @@
             <div class="panel-body">
               <table class="table">
                 <tbody>
-                  <tr>
-                    <td>sample data</td>
-                  </tr>
+                <%messages.forEach(function(message){%>
+                  <% if(message.sender_id==landlord._id){ %>
+                     <tr>
+                      <td><%=message.message%></td>
+                      <td></td>
+                    </tr>
+                   <% } else{ %>  
+                     <tr>
+                      <td></td>
+                      <td><%=message.message%></td>
+                    </tr>
+                  <% } %>
+                  
+                <% }); %>  
                 </tbody>
               </table>
+              <form action="/rent_agreement/submit_message/<%=agreement._id%>" method="post">
+                <div class="form-group">
+                  <label class="col-md-4 control-label">Send message</label>
+                    <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                          <textarea class="form-control" name="message" placeholder="Type your message here"></textarea>
+                  </div>
+                  </div>
+                </div>
+                <input name="reciever_id" type="text" hidden="true" value="<%=tenant._id%>">
+                <div class="form-group">
+                  <label class="col-md-4 control-label"></label>
+                  <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary" >Send <span class="glyphicon glyphicon-send"></span></button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
