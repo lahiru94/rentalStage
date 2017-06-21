@@ -82,8 +82,8 @@
                         <img class="media-object" src="http://placehold.it/64x64" alt="">
                     </a>
                     <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
+                        <h4 class="media-heading"><%=comment.commenter_name%>
+                            <small><%=comment.createdAt.toDateString()%></small>
                         </h4>
                         <%=comment.text%>
                     </div>
@@ -91,9 +91,11 @@
                   <% }); %>
                 <% } else{ %>  
                    <h4>No comments</h4>
-                   <p>Hey terra!</p>
                 <% } %>
            </div>
+
+           
+
 
             <!-- Blog Sidebar Widgets Column -->
             <div class="col-md-4" style="padding-top: 30px" >
@@ -126,7 +128,10 @@
                     <!-- /.row -->
                 </div>
 
-                <!-- Side Widget Well -->
+                <% if(rent_requests.length!=0){ %>
+                   <h1>You have submitted a request</h1>
+                 <% } else{ %>  
+                    <!-- Side Widget Well -->
                 <div class="well">
                     <h4>Submit a request</h4>
                     <p>You can send an optional message to the owner of this property with this request</p>
@@ -136,6 +141,8 @@
                     </form>
                     
                 </div>
+                <% } %>
+                
 
             </div>
 

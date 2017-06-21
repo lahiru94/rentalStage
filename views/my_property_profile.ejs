@@ -86,8 +86,9 @@
                         <img class="media-object" src="http://placehold.it/64x64" alt="">
                     </a>
                     <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
+                        <h4 class="media-heading">
+                        <%=comment.commenter_name%>
+                            <small><%=comment.createdAt.toDateString()%></small>
                         </h4>
                         <%=comment.text%>
                     </div>
@@ -139,12 +140,7 @@
                     <!-- /.row -->
                 </div>
 
-                <!-- Side Widget Well -->
-                <div class="well">
-                    <h4>Additional data</h4>
-
-                    
-                </div>
+              
 
             </div>
 

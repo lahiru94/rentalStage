@@ -39,11 +39,21 @@ router.route('/add_user')
 
 });
 
-/* view temp profile */
+/* view profile */
 router.get('/profile', isLoggedIn, function(req, res) {
         res.render('user_profile.ejs', {
             user : req.user // get the user out of session and pass to template
         });
+});
+
+/* view other profile */
+router.get('/profile/:id', isLoggedIn, function(req, res) {
+      User.findById(req.params.id,function(err,user){
+        res.render('user_profile.ejs', {
+            'user' : user // get the user out of session and pass to template
+        });
+      });
+        
 });
 
 /* view dashbord*/

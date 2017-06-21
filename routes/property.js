@@ -56,7 +56,7 @@ router.route('/upload_image/:id')
 
 router.route('/property_feed')
 .get(isLoggedIn,function(req,res,next){
-    Property.find({},function(err,properties){
+    Property.find({status:"available",owner_id: {$ne: req.user._id}},function(err,properties){
         if(err) throw err;
         res.render('property_feed.ejs',{'properties':properties});
     });
@@ -71,8 +71,15 @@ router.route('/property_profile/:id')
     Comment.find({property_id:req.params.id},function(err,comment,next){
         console.log(comment);
         Property.findById(req.params.id,function(err,property,next){
-            res.render('property_profile.ejs',{'property':property,'comments':comment});
-            if(err) throw err;
+            RentRequest.find({
+                property_id:req.params.id,
+                requester_id:req.user._id,
+                status:"pending"
+            },function(err,rent_requests){
+                console.log(rent_requests);
+                res.render('property_profile.ejs',{'property':property,'comments':comment,'rent_requests':rent_requests});
+                if(err) throw err;
+            });        
         });
     });
 
@@ -135,7 +142,7 @@ router.route('/request/:id')  //here id is the property id
         RentRequest.create({
             property_id :req.params.id,
             requester_id :req.user._id,
-            requester_name :user.first_name+user.last_name,
+            requester_name :user.first_name+" "+user.last_name,
             reciever_id:property.owner_id,
             message:req.body.message
             },function(err,rental_request){

@@ -38,10 +38,10 @@
                   <tr>
                     <td><%=request.requester_name%> has requsted to rent your property</td>
                     <td><%=request.property_id%></td>
-                    <td> <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-user"></span></a> </td>
-                    <td><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a></td>
+                    <td> <a href="/users/profile/<%=request.requester_id%>" class="btn btn-default"><span class="glyphicon glyphicon-user"></span></a> </td>
+                    <td><a href="/property/my_property_profile/<%=request.property_id%>" class="btn btn-default"><span class="glyphicon glyphicon-home"></span></a></td>
                     <td> <a href="/property/reject_request/<%=request._id%>" class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span>    </a> </td>
-                    <td><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></td>
+                    <td><a href="/property/reserve/<%=request._id%>" class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></td>
                   </tr>
                   <% }); %>
                 </tbody>
@@ -97,7 +97,10 @@
         <div class="col-md-5">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">My properties</h3>
+              <h3 class="panel-title">My properties
+              <a href="/property/add_property" class="btn btn-default">Add property</a>
+              </h3>
+
             </div>
             <div class="panel-body">
               <table class="table">
